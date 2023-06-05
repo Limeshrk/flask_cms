@@ -68,3 +68,22 @@ main {
 #createPost {
   margin-top: 20px;
 }
+.post-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-delete {
+  background-color: orangered;
+  color:white
+}
+
+.btn-delete:hover {
+  background-color: black;
+  color: white
+}
+
+.btn-tooltip:after{
+  content: attr(data-tooltip);
+}
