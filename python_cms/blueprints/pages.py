@@ -111,3 +111,29 @@ def delete_post(post_id):
   post.delete()
   flash(f'The post with title: {post.title} was successfully deleted.')
   return redirect(url_for("pages.index"))
+
+@login_required
+@pages_blueprint.route("/post/edit/<string:post_id>", methods=['GET', 'POST'])
+def edit_post(post_id):
+  post = PostModel.get(post_id)
+  
+  if post.author_id != current_user.id:  
+    return "You are not authorized to edit this content", 403
+    
+  form = PostForm()
+  form.title.data = post.title
+  form.teaser_image.data = post.teaser_image
+  form.body.data = post.body
+  
+  if request.method == "POST" and form.validate_on_submit():
+    post.title = form.title.data
+    post.teaser_image = form.teaser_image.data
+    post.body = form.body.data
+     
+    post.save()
+    
+    flash(f"Post with title: {post.title} edited successfully", "success")
+    return redirect(url_for("pages.index"))
+      
+  return render_template("edit_post.html.j2", form=form, post_id=post_id)
+  

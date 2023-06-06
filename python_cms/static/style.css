@@ -73,17 +73,30 @@ main {
   justify-content: space-between;
   align-items: center;
 }
+.btn-container {
+  
+}
 
 .btn-delete {
   background-color: orangered;
-  color:white
+  color:white;
 }
 
 .btn-delete:hover {
   background-color: black;
-  color: white
+  color: white;
 }
 
+.btn-edit {
+  background-color: blueviolet;
+  color: white; 
+}
+
+.btn-edit:hover {
+  background-color: white;
+  color: darkmagenta;
+
+}
 .btn-tooltip:after{
   content: attr(data-tooltip);
 }

@@ -9,9 +9,14 @@
     <h1>{{ post.title }}</h1>
 
     {% if current_user.id == post.author.id %}
+    <div class="btn-container">
+      <button onclick="location.href='{{ url_for('pages.edit_post', post_id=post.id) }}'" class= "btn btn-edit tooltip tooltip-bottom" data-tooltip="edit this post">
+              Edit
+      </button>
       <button onclick="location.href='{{ url_for('pages.delete_post', post_id=post.id) }}'" class= "btn btn-delete tooltip tooltip-bottom" data-tooltip="permanently delete this post">
               Delete
       </button>
+    </div>
     {% endif %}
   </div>
 
