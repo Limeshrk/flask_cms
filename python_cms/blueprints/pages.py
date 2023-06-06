@@ -60,6 +60,7 @@ def create_post():
 
     title = request.form["title"]
     user = current_user.get_id()
+    promoted = bool(request.form.get("promoted", False))
 
     file = request.files["teaser_image"]
     # print(file)
@@ -72,7 +73,8 @@ def create_post():
     post = PostModel(title=title,
                      body=clean_body,
                      user_id=user,
-                     teaser_image=filename)
+                     teaser_image=filename,
+                     promoted=promoted)
     post.save()
     flash(f"Post with title: {title} created successfully", "success")
     return redirect(url_for("pages.create_post"))
@@ -124,11 +126,13 @@ def edit_post(post_id):
   form.title.data = post.title
   form.teaser_image.data = post.teaser_image
   form.body.data = post.body
+  form.promoted.data = bool(post.promoted)
   
   if request.method == "POST" and form.validate_on_submit():
     post.title = form.title.data
     post.teaser_image = form.teaser_image.data
     post.body = form.body.data
+    post.promoted = form.promoted.data
      
     post.save()
     

@@ -43,6 +43,16 @@ main {
   object-fit: cover;
 }
 
+.promoted-posts,
+.std-posts {
+  display: flex;
+  flex-wrap: wrap
+}
+
+.promoted-card {
+  border: 3px solid blueviolet
+}
+
 .user-menu:hover > .user-submenu {
   position: absolute;
   top: 30px;
@@ -94,7 +104,7 @@ main {
 
 .btn-edit:hover {
   background-color: white;
-  color: darkmagenta;
+  color: blueviolet;
 
 }
 .btn-tooltip:after{
