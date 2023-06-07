@@ -10,15 +10,18 @@ class PostModel(BaseModel):
   body = mapped_column(String(8000), nullable=False)
   author_id = mapped_column(String(80), ForeignKey("users.id"), nullable=False)
   promoted = mapped_column(db.Boolean(), default=False)
+  category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
 
   author = relationship("UserModel", back_populates="posts")
+  category = relationship("CategoryModel", back_populates="posts")
 
-  def __init__(self, title, body, user_id, teaser_image, promoted):
+  def __init__(self, title, body, user_id, teaser_image, promoted, category_id):
     self.title = title
     self.body = body
     self.author_id = user_id
     self.teaser_image = teaser_image
     self.promoted = promoted
+    self.category_id = category_id
 
   @classmethod
   def get(cls, post_id):

@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 from python_cms.forms.post_form import PostForm
 from python_cms.models.post import PostModel
+from python_cms.models.category import CategoryModel
 
 pages_blueprint = Blueprint('pages', __name__)
 
@@ -52,6 +53,7 @@ def sanitize_html(value):
 @login_required
 def create_post():
   form = PostForm()
+  form.category.choices = [(c.id, c.name) for c in CategoryModel.get_all()]
   if request.method == "POST" and form.validate_on_submit():
     # print(json.dumps(request.form, indent=2))
     body = request.form["body"]
@@ -61,6 +63,7 @@ def create_post():
     title = request.form["title"]
     user = current_user.get_id()
     promoted = bool(request.form.get("promoted", False))
+    category_id = int(request.form.get("category"))
 
     file = request.files["teaser_image"]
     # print(file)
@@ -74,7 +77,9 @@ def create_post():
                      body=clean_body,
                      user_id=user,
                      teaser_image=filename,
-                     promoted=promoted)
+                     promoted=promoted,
+                     category_id=category_id
+                     )
     post.save()
     flash(f"Post with title: {title} created successfully", "success")
     return redirect(url_for("pages.create_post"))
@@ -127,12 +132,15 @@ def edit_post(post_id):
   form.teaser_image.data = post.teaser_image
   form.body.data = post.body
   form.promoted.data = bool(post.promoted)
+  form.category.choices = [(category.id, category.name) for category in CategoryModel.get_all()]
+  form.category.data = post.category_id
   
   if request.method == "POST" and form.validate_on_submit():
     post.title = form.title.data
     post.teaser_image = form.teaser_image.data
     post.body = form.body.data
     post.promoted = form.promoted.data
+    post.category_id = form.catefory.data
      
     post.save()
     

@@ -53,6 +53,20 @@ main {
   border: 3px solid blueviolet
 }
 
+.card-category {
+  background-color: lightgrey; 
+  color: black; 
+  border-radius: 10px; 
+  padding: 5px 10px 5px 10px;
+  margin: 10px;
+  width: fit-content; 
+  display: inline-block; 
+}
+
+.radio-category-select{
+  display:block
+}
+
 .user-menu:hover > .user-submenu {
   position: absolute;
   top: 30px;
@@ -82,9 +96,6 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.btn-container {
-  
 }
 
 .btn-delete {
